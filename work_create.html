@@ -1,0 +1,97 @@
+{% extends 'gallery/base.html' %}
+
+{% block title %}Добавить работу - ArtProject{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Добавить новую работу</h1>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+            <div class="alert alert-error">
+                {% for error in form.non_field_errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <div class="form-group">
+            <label for="{{ form.title.id_for_label }}" class="form-label">Название работы *</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div class="form-errors">{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.description.id_for_label }}" class="form-label">Описание</label>
+            {{ form.description }}
+            {% if form.description.errors %}
+                <div class="form-errors">{{ form.description.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.year.id_for_label }}" class="form-label">Год создания *</label>
+            {{ form.year }}
+            {% if form.year.errors %}
+                <div class="form-errors">{{ form.year.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.genre.id_for_label }}" class="form-label">Жанр</label>
+            {{ form.genre }}
+            {% if form.genre.errors %}
+                <div class="form-errors">{{ form.genre.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">Инструменты</label>
+            <div class="checkbox-group">
+                {% for checkbox in form.tools %}
+                    <div class="checkbox-item">
+                        {{ checkbox.tag }} {{ checkbox.choice_label }}
+                    </div>
+                {% endfor %}
+            </div>
+            {% if form.tools.errors %}
+                <div class="form-errors">{{ form.tools.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.proportion.id_for_label }}" class="form-label">Соотношение сторон</label>
+            {{ form.proportion }}
+            {% if form.proportion.errors %}
+                <div class="form-errors">{{ form.proportion.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.tags.id_for_label }}" class="form-label">Теги</label>
+            {{ form.tags }}
+            {% if form.tags.errors %}
+                <div class="form-errors">{{ form.tags.errors }}</div>
+            {% endif %}
+            <div class="form-text">Перечислите теги через запятую</div>
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.image.id_for_label }}" class="form-label">Изображение работы *</label>
+            {{ form.image }}
+            {% if form.image.errors %}
+                <div class="form-errors">{{ form.image.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="display: flex; gap: 1rem;">
+            <button type="submit" class="btn btn-primary">Добавить работу</button>
+            <a href="{% url 'profile' %}" class="btn btn-secondary">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
